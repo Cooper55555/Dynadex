@@ -1,15 +1,14 @@
 body {
-    background-color: #f0f0f0;
+    background: linear-gradient(135deg, #8e44ad, #e91e63);
+    margin: 0; 
     font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    background-color: #333;
 }
 
 .main {
-    margin-left: 20px; /* Space for a potential open button */
+    margin-left: auto;
+    margin-right: auto;
     padding: 20px;
+    text-align: center;
 }
 
 .container {
@@ -19,8 +18,9 @@ body {
 
 h1 {
     font-size: 100px;
-    text-align: center;
     color: white;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 255, 255, 0.8);
+    animation: fadeIn 1s ease-in-out;
 }
 
 .card-grid {
@@ -28,6 +28,7 @@ h1 {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 16px;
     padding: 20px;
+    justify-items: center;
 }
 
 .card {
@@ -35,11 +36,14 @@ h1 {
     border: 3px solid #333;
     border-radius: 8px;
     padding: 10px;
-    transition: transform 0.2s;
+    transition: transform 0.2s, box-shadow 0.3s;
+    opacity: 0;
+    animation: slideInUp 0.5s forwards;
 }
 
 .card:hover {
     transform: scale(1.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .card img {
@@ -56,6 +60,128 @@ h1 {
 .card p {
     font-size: 14px;
     color: #555;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin: 10px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc; 
+    transition: background-color 0.4s ease; 
+    border-radius: 34px; 
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: transform 0.4s ease;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.counter {
+    margin-bottom: 20px;
+}
+
+.content {
+    padding: 20px;
+    font-size: 30px;
+}
+
+.content h2 {
+    color: #333;
+    font-size: 70px;
+    animation: textAnimation 1s ease forwards;
+}
+
+.content p, .content ul {
+    line-height: 1.6;
+}
+
+button {
+    background-color: white;
+    cursor: pointer;
+    border: 2px solid #333;
+    border-radius: 10px;
+    padding: 5px 15px;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+button:hover {
+    background-color: #333;
+    color: white;
+}
+
+span {
+    font-size: 50px;
+}
+
+.checkboxes-important {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes textAnimation {
+    0% {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 @media (max-width: 600px) {
@@ -83,45 +209,4 @@ h1 {
     .open-btn {
         font-size: 15px;
     }
-}
-
-.progress-bar-container {
-    position: relative;
-    margin-bottom: 10px;
-}
-
-input[type="checkbox"] {
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-    float: left;
-}
-
-.content {
-    padding: 20px;
-    font-size: 30px;
-}
-
-.content h2 {
-    color: #333;
-    font-size: 70px;
-}
-
-.content p, .content ul {
-    line-height: 1.6;
-}
-
-button {
-    background-color: white;
-    cursor: pointer;
-    border: 2px solid #333;
-}
-
-span {
-    font-size: 50px;
-}
-
-.checkboxes-important {
-    display: flex;
-    margin: 20px;
 }

@@ -63,59 +63,71 @@ function displayCards() {
         const cardElement = document.createElement('div');
         cardElement.className = 'card';
 
-        cardElement.innerHTML = `
-            <div class="progress-bar-container">
-                <input type="checkbox" id="${checkboxId}" class="checkboxclass" ${isChecked ? 'checked' : ''}>
-                <div class="counter">
-                    <button id="decrement-${index}">-</button>
-                    <span id="count-${index}">${count}</span>
-                    <button id="increment-${index}">+</button>
-                </div>
+        const cardHTML = `
+        <div class="progress-bar-container">
+            <div class="checkboxes-important">
+                <label class="switch" id="leverSwitch-${index}">
+                    <input type="checkbox" id="${checkboxId}" class="checkboxclass" onclick="toggleAnimation('${checkboxId}')">
+                    <span class="slider"></span>
+                </label>
             </div>
-            <img src="${card.image}" alt="${card.name}">
-            <h2>${card.name}</h2>
-            <p>${card.description}</p>
-        `;
+            <div class="counter">
+                <button id="decrement-${index}">-</button>
+                <span id="count-${index}">0</span>
+                <button id="increment-${index}">+</button>
+            </div>
+        </div>
+        <img src="${card.image}" alt="${card.name}">
+        <h2>${card.name}</h2>
+        <p>${card.description}</p>
+    `;
+
+        cardElement.innerHTML += cardHTML;
 
         const checkbox = cardElement.querySelector(`#${checkboxId}`);
 
-        // Increment button functionality
         cardElement.querySelector(`#increment-${index}`).addEventListener('click', () => {
             count++;
             cardElement.querySelector(`#count-${index}`).textContent = count;
-            checkbox.checked = count > 0; // Update checkbox state
+            checkbox.checked = count > 0;
             saveCount(index, count);
         });
 
-        // Decrement button functionality
         cardElement.querySelector(`#decrement-${index}`).addEventListener('click', () => {
             if (count > 0) {
                 count--;
                 cardElement.querySelector(`#count-${index}`).textContent = count;
             }
-            checkbox.checked = count > 0; // Update checkbox state based on count
+            checkbox.checked = count > 0;
             saveCount(index, count);
         });
 
-        // Save checkbox state when changed
         checkbox.addEventListener('change', () => {
-            // If checkbox is checked, set count to 1, else set count to 0
             count = checkbox.checked ? 1 : 0;
             cardElement.querySelector(`#count-${index}`).textContent = count;
-            saveCount(index, count); // Save the count
-            localStorage.setItem(checkboxId, checkbox.checked); // Save checkbox state
+            saveCount(index, count);
+            localStorage.setItem(checkboxId, checkbox.checked);
         });
 
         cardGrid.appendChild(cardElement);
     });
 }
 
-// Function to save count and checkbox state to localStorage
 function saveCount(index, count) {
-    localStorage.setItem(`count-${index}`, count); // Save count
+    localStorage.setItem(`count-${index}`, count);
 }
 
-// Load the checkbox states when the page loads
 window.onload = () => {
-    displayCards(); // Ensure that the cards are displayed
+    displayCards();
 };
+
+function toggleAnimation() {
+    const switchInput = document.getElementById('leverSwitch');
+    const slider = document.querySelector('.slider');
+
+    slider.classList.add('animate');
+
+    setTimeout(() => {
+        slider.classList.remove('animate');
+    }, 400);
+}
