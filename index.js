@@ -58,31 +58,33 @@ function displayCards() {
         // Retrieve count from localStorage, or set to 0
         let count = parseInt(localStorage.getItem(`count-${index}`)) || 0;
         const checkboxId = `checkbox-${index}`; // Unique checkbox ID
-        const isChecked = JSON.parse(localStorage.getItem(checkboxId)) || (count > 0); // Load state from localStorage or determine based on count
+        const isChecked = JSON.parse(localStorage.getItem(checkboxId)) || (count > 0);
 
         const cardElement = document.createElement('div');
         cardElement.className = 'card';
 
         const cardHTML = `
-        <div class="progress-bar-container">
-            <div class="checkboxes-important">
-                <label class="switch" id="leverSwitch-${index}">
-                    <input type="checkbox" id="${checkboxId}" class="checkboxclass" onclick="toggleAnimation('${checkboxId}')">
-                    <span class="slider"></span>
-                </label>
+            <div class="progress-bar-container">
+                <div class="checkboxes-important">
+                    <label class="switch" id="leverSwitch-${index}">
+                        <input type="checkbox" id="${checkboxId}" class="checkboxclass" onclick="toggleAnimation('${checkboxId}')" ${
+                            isChecked ? 'checked' : ''
+                        }>
+                        <span class="slider"></span>
+                    </label>
+                </div>
             </div>
             <div class="counter">
                 <button id="decrement-${index}">-</button>
-                <span id="count-${index}">0</span>
+                <span id="count-${index}">${count}</span>
                 <button id="increment-${index}">+</button>
             </div>
-        </div>
-        <img src="${card.image}" alt="${card.name}">
-        <h2>${card.name}</h2>
-        <p>${card.description}</p>
-    `;
+            <img src="${card.image}" alt="${card.name}">
+            <h2>${card.name}</h2>
+            <p>${card.description}</p>
+        `;
 
-        cardElement.innerHTML += cardHTML;
+        cardElement.innerHTML = cardHTML;
 
         const checkbox = cardElement.querySelector(`#${checkboxId}`);
 
@@ -121,9 +123,9 @@ window.onload = () => {
     displayCards();
 };
 
-function toggleAnimation() {
-    const switchInput = document.getElementById('leverSwitch');
-    const slider = document.querySelector('.slider');
+function toggleAnimation(checkboxId) {
+    const switchInput = document.getElementById(checkboxId);
+    const slider = switchInput.nextElementSibling; // Get the sibling slider element
 
     slider.classList.add('animate');
 
